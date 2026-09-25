@@ -4,7 +4,169 @@ const prompt = require("prompt-sync")();
 
 // Data
 
-const candidates = [];
+const candidates = [
+  {
+    cin: "AB123456",
+    nom: "Alami",
+    prenom: "Youssef",
+    partiPolitique: "Parti A",
+    age: 45,
+    electeurs: [],
+  },
+  {
+    cin: "CD234567",
+    nom: "Benali",
+    prenom: "Amine",
+    partiPolitique: "Parti B",
+    age: 38,
+    electeurs: [],
+  },
+  {
+    cin: "EF345678",
+    nom: "Chakir",
+    prenom: "Sara",
+    partiPolitique: "Parti C",
+    age: 42,
+    electeurs: [],
+  },
+  {
+    cin: "GH456789",
+    nom: "Dahbi",
+    prenom: "Karim",
+    partiPolitique: "Parti A",
+    age: 51,
+    electeurs: [],
+  },
+  {
+    cin: "IJ567890",
+    nom: "El Mansouri",
+    prenom: "Nadia",
+    partiPolitique: "Parti D",
+    age: 36,
+    electeurs: [],
+  },
+  {
+    cin: "KL678901",
+    nom: "Fassi",
+    prenom: "Omar",
+    partiPolitique: "Parti B",
+    age: 47,
+    electeurs: [],
+  },
+  {
+    cin: "MN789012",
+    nom: "Ghazali",
+    prenom: "Hind",
+    partiPolitique: "Parti C",
+    age: 40,
+    electeurs: [],
+  },
+  {
+    cin: "OP890123",
+    nom: "Haddad",
+    prenom: "Mehdi",
+    partiPolitique: "Parti D",
+    age: 34,
+    electeurs: [],
+  },
+  {
+    cin: "QR901234",
+    nom: "Idrissi",
+    prenom: "Salma",
+    partiPolitique: "Parti A",
+    age: 43,
+    electeurs: [],
+  },
+  {
+    cin: "ST012345",
+    nom: "Jabri",
+    prenom: "Rachid",
+    partiPolitique: "Parti B",
+    age: 55,
+    electeurs: [],
+  },
+  {
+    cin: "UV123456",
+    nom: "Kabbaj",
+    prenom: "Imane",
+    partiPolitique: "Parti C",
+    age: 39,
+    electeurs: [],
+  },
+  {
+    cin: "WX234567",
+    nom: "Lahlou",
+    prenom: "Anas",
+    partiPolitique: "Parti D",
+    age: 31,
+    electeurs: [],
+  },
+  {
+    cin: "YZ345678",
+    nom: "Mernissi",
+    prenom: "Khadija",
+    partiPolitique: "Parti A",
+    age: 48,
+    electeurs: [],
+  },
+  {
+    cin: "AA456789",
+    nom: "Naciri",
+    prenom: "Soufiane",
+    partiPolitique: "Parti B",
+    age: 37,
+    electeurs: [],
+  },
+  {
+    cin: "BB567890",
+    nom: "Ouazzani",
+    prenom: "Meryem",
+    partiPolitique: "Parti C",
+    age: 44,
+    electeurs: [],
+  },
+  {
+    cin: "CC678901",
+    nom: "Qadiri",
+    prenom: "Adil",
+    partiPolitique: "Parti D",
+    age: 52,
+    electeurs: [],
+  },
+  {
+    cin: "DD789012",
+    nom: "Rami",
+    prenom: "Aya",
+    partiPolitique: "Parti A",
+    age: 29,
+    electeurs: [],
+  },
+  {
+    cin: "EE890123",
+    nom: "Saidi",
+    prenom: "Walid",
+    partiPolitique: "Parti B",
+    age: 46,
+    electeurs: [],
+  },
+  {
+    cin: "FF901234",
+    nom: "Tazi",
+    prenom: "Leila",
+    partiPolitique: "Parti C",
+    age: 41,
+    electeurs: [],
+  },
+  {
+    cin: "GG012345",
+    nom: "Zerouali",
+    prenom: "Hamza",
+    partiPolitique: "Parti D",
+    age: 35,
+    electeurs: [],
+  },
+];
+
 
 // Linear search function par cin 
 
@@ -38,6 +200,10 @@ function linearSearchReturnIndex(cin) {
     }
     return (-1);
 }
+
+
+
+
 // Ajouter un condidat
 
 function ajouterCandidats() {
@@ -75,6 +241,9 @@ function ajouterCandidats() {
     console.log("Candidat ajouté avec succès.");
 }
 
+
+
+
 // Ajouter plusieurs candidats à la fois.
 
 function ajouterPlusieursCandidats() {
@@ -91,6 +260,9 @@ function ajouterPlusieursCandidats() {
     }
 }
 
+
+
+
 //  Afficher la liste des candidats.
 
 function afficherLesCandidats() {
@@ -106,19 +278,15 @@ function afficherLesCandidats() {
     for (let i = 0; i < candidates.length; i++) {
         const candidat = candidates[i];
 
-        console.log(`=================================
-Candidat ${i + 1}
-=================================
-CIN : ${candidat.cin}
-Nom : ${candidat.nom}
-Prénom : ${candidat.prenom}
-Parti politique : ${candidat.partiPolitique}
-Âge : ${candidat.age}
-Nombre de votes : ${candidat.electeurs.length}
-=================================`)
+        console.log(`${i + 1}. ${candidat.prenom} ${candidat.nom} - CIN : ${candidat.cin} - parti politique : ${candidat.partiPolitique} - Âge :  ${candidat.age} - Votes : ${candidat.electeurs.length}.`);
     }
+
     console.log();
 }
+
+
+
+
 
 // Afficher candidats par nombre de votes
 
@@ -159,18 +327,12 @@ function afficherCandidatsParNombreDeVotes() {
     for (let i = 0; i < sortedCandidates.length; i++) {
         const candidat = sortedCandidates[i];
 
-        console.log(`=================================
-Candidat ${i + 1}
-=================================
-CIN : ${candidat.cin}
-Nom : ${candidat.nom}
-Prénom : ${candidat.prenom}
-Parti politique : ${candidat.partiPolitique}
-Âge : ${candidat.age}
-Nombre de votes : ${candidat.electeurs.length}
-=================================`);
+        console.log(`${i + 1}. ${candidat.prenom} ${candidat.nom} - CIN : ${candidat.cin} - parti politique : ${candidat.partiPolitique} - Âge :  ${candidat.age} - Votes : ${candidat.electeurs.length}.`);
     }
 }
+
+
+
 
 // Afficher les candidats d'un parti politique spécifique
 
@@ -190,16 +352,7 @@ function afficherCandidatsParPartiPolitique() {
 
             // affiche
 
-            console.log(`=================================
-Candidat ${i + 1}
-=================================
-CIN : ${candidat.cin}
-Nom : ${candidat.nom}
-Prénom : ${candidat.prenom}
-Parti politique : ${candidat.partiPolitique}
-Âge : ${candidat.age}
-Nombre de votes : ${candidat.electeurs.length}
-=================================`);
+            console.log(`${i + 1}. ${candidat.prenom} ${candidat.nom} - CIN : ${candidat.cin} - parti politique : ${candidat.partiPolitique} - Âge :  ${candidat.age} - Votes : ${candidat.electeurs.length}.`);
 
             found = 1;
         }
@@ -209,6 +362,9 @@ Nombre de votes : ${candidat.electeurs.length}
         console.log("Aucun candidat trouvé pour ce parti. ");
     }
 }
+
+
+
 
 // Voter pour un candidat
 
@@ -256,9 +412,12 @@ function voter() {
     }
 }
 
-// Modifier les informations d'un candidat
 
-function modifierInfosDeCandidat() {
+
+
+// Modifier l'age d'un candidat
+
+function modifierAgeDeCandidat() {
     const candidatCin = prompt("Entrer la Cin du candidat : ");
 
     // search for candidat
@@ -268,18 +427,18 @@ function modifierInfosDeCandidat() {
     // check
 
     if (candidat === -1) {
+        console.log();
         console.log("Erreur: candidat n'existe pas.");
+        console.log();
         return;
     }
     else {
-        const newParti = prompt("Entrer le nouveau parti politique : ");
 
-        const newAge = Number(prompt("Enter le nouvel age : "));
+        const nouveauAge = Number(prompt("Enter le nouvel age : "));
 
         // change infos
 
-        candidat.partiPolitique = newParti;
-        candidat.age = newAge;
+        candidat.age = nouveauAge;
 
         console.log();
         console.log("Les informations du candidat ont été mises à jour avec succès. ");
@@ -288,6 +447,40 @@ function modifierInfosDeCandidat() {
 
 
 }
+
+// Modifier le parti politique d'un candidat
+
+function modifierpartiPolitiqueDeCandidat() {
+    const candidatCin = prompt("Entrer la Cin du candidat : ");
+
+    // search for candidat
+
+    const candidat = linearSearch(candidatCin);
+
+    // check
+
+    if (candidat === -1) {
+        console.log();
+        console.log("Erreur: candidat n'existe pas.");
+        console.log();
+        return;
+    }
+    else {
+
+        const nouveauParti = Number(prompt("Enter le nouvel parti politique : "));
+
+        // change infos
+
+        candidat.partiPolitique = nouveauParti;
+
+        console.log();
+        console.log("Les informations du candidat ont été mises à jour avec succès. ");
+        console.log();
+    }
+
+
+}
+
 
 
 // Supprimer un candidat
@@ -333,6 +526,9 @@ function supprimerUnCandidat() {
     }
 }
 
+
+
+
 // Rechercher des candidats par nom
 
 function rechercherDesCandidats() {
@@ -352,7 +548,12 @@ function rechercherDesCandidats() {
 
 }
 
+
+
+
+
 // Statistiques de l'élection
+
 function Statistiques() {
     // Nombre totale des candidats
 
@@ -410,6 +611,9 @@ Nombre de votes : ${candidat.electeurs.length}
 
 }
 
+
+
+
 // menu principale
 
 function afficherMenu() {
@@ -419,14 +623,12 @@ GESTION DES ÉLECTIONS
 =================================
 1. Ajouter un candidat
 2. Ajouter plusieurs candidats
-3. Afficher la list des candidats
-4. Afficher candidats par nombre de votes
-5. Afficher les candidats d'un parti politique spécifique
-6. Voter pour un candidat
-7. Modifier les informations d'un candidat
-8. Supprimer un candidat
-9. Rechercher des candidats 
-10. Statistiques de l'élection
+3. Afficher les candidats
+4. Voter pour un candidat
+5. Modifier les informations d'un candidat
+6. Supprimer un candidat
+7. Rechercher des candidats 
+8. Statistiques de l'élection
 0. Quitter`);
 
     console.log();
@@ -434,6 +636,48 @@ GESTION DES ÉLECTIONS
     const choix = Number(prompt("Votre choix : "));
     return (choix);
 }
+
+
+
+
+// Afficher les candidat menu
+
+function AfficherCandidatsMenu()
+{
+    console.log(`=================================
+AFFICHER LES CANDIDATS
+=================================
+1. Afficher la list des candidats
+2. Afficher les candidats par nombre de votes
+3. Afficher  les candidats d'un partie politique specifique
+0. Retour au menu principal`);
+
+const afficher = Number(prompt("Votre choix : "));
+return (afficher)
+}
+
+
+
+
+// Modification les candidat menu
+
+function AffichermodificationCandidatsMenu()
+{
+    console.log(`=================================
+MODIFIER LES INFORMATION DU CANDIDAT
+=================================
+1. Modifier le parti politique d'un candidat
+2. Modifier l'âge d'un candidat
+0. Retour au menu principal`);
+
+const modifier = Number(prompt("Votre choix : "));
+return (modifier)
+}
+
+
+
+
+// Control menu
 
 function controlMenu() {
     let choix;
@@ -451,34 +695,26 @@ function controlMenu() {
                 break;
 
             case 3:
-                afficherLesCandidats();
+                afficherControlMenu();
                 break;
 
             case 4:
-                afficherCandidatsParNombreDeVotes();
-                break;
-
-            case 5:
-                afficherCandidatsParPartiPolitique();
-                break;
-
-            case 6:
                 voter();
                 break;
 
-            case 7:
-                modifierInfosDeCandidat();
+            case 5:
+                modificationCandidatControlMenu();
                 break;
 
-            case 8:
+            case 6:
                 supprimerUnCandidat();
                 break;
 
-            case 9:
+            case 7:
                 rechercherDesCandidats();
                 break;
 
-            case 10:
+            case 8:
                 Statistiques();
                 break;
 
@@ -493,5 +729,72 @@ function controlMenu() {
 
 
 }
+
+
+
+
+// Affichage control menu
+
+function afficherControlMenu()
+{
+    let choix;
+
+    while (choix !== 0) {
+        choix = AfficherCandidatsMenu();
+
+        switch (choix) {
+            case 1:
+                afficherLesCandidats();
+                break;
+
+            case 2:
+                afficherCandidatsParNombreDeVotes();
+                break;
+
+            case 3:
+                afficherCandidatsParPartiPolitique();
+                break;
+
+            case 0:
+                controlMenu();
+                break;
+
+            default:
+                console.log("Choix invalide.");
+        }
+    }
+}
+
+
+
+
+// Modification control menu
+
+function modificationCandidatControlMenu()
+{
+    let choix;
+
+    while (choix !== 0) {
+        choix = AffichermodificationCandidatsMenu();
+
+        switch (choix) {
+            case 1:
+                modifierAgeDeCandidat();
+                break;
+
+            case 2:
+                modifierpartiPolitiqueDeCandidat();
+                break;
+
+            case 0:
+                controlMenu();
+                break;
+
+            default:
+                console.log("Choix invalide.");
+        }
+    }
+}
+
 
 controlMenu();
