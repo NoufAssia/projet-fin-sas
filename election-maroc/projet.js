@@ -130,9 +130,10 @@ function modificationCandidatControlMenu()
 
 // Menu principale
 function menuPrincipale() {
-    console.log(`=================================
+    console.log(colorer(`=================================
 GESTION DES ÉLECTIONS
-=================================
+================================= `, couleurs.jaune));
+console.log(`
 1. Ajouter un candidat
 2. Ajouter plusieurs candidats
 3. Afficher les candidats
@@ -526,10 +527,7 @@ function rechercherDesCandidats() {
         if (candidates[i].nom === nom) {
             const candidat = candidates[i];
 
-
             console.log(`${i + 1}. ${candidat.prenom} ${candidat.nom} - CIN : ${candidat.cin} - parti politique : ${candidat.partiPolitique} - Âge :  ${candidat.age} - Votes : ${candidat.electeurs.length}.`);
-
-            found = 1;
         }
     }
     }
