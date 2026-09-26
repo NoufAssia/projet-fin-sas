@@ -587,7 +587,7 @@ function Statistiques() {
     }
 
     console.log();
-    console.log("- - Voici le nombre de candidtas par parti politique.");
+    console.log("- Voici le nombre de candidtas par parti politique.");
     console.log();
 
     for (let parti in partisPolitique) {
