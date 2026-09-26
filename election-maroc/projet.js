@@ -19,7 +19,7 @@ function colorer(texte, code) {
 // Data
 const candidates = [
     { cin: "AB123456", nom: "Alami", prenom: "Youssef", partiPolitique: "Parti A", age: 45, electeurs: [] },
-    { cin: "CD234567", nom: "Benali", prenom: "Amine", partiPolitique: "Parti B", age: 38, electeurs: [] },
+    { cin: "c", nom: "Benali", prenom: "Amine", partiPolitique: "Parti B", age: 38, electeurs: [] },
     { cin: "EF345678", nom: "Chakir", prenom: "Sara", partiPolitique: "Parti C", age: 42, electeurs: [] },
     { cin: "GH456789", nom: "Dahbi", prenom: "Karim", partiPolitique: "Parti A", age: 51, electeurs: [] },
     { cin: "IJ567890", nom: "El Mansouri", prenom: "Nadia", partiPolitique: "Parti D", age: 36, electeurs: [] },
@@ -71,11 +71,12 @@ function controlMenu() {
                  Statistiques();
                  break;
             case 0:
-                console.log("Au revoir.");
+                console.log(colorer("Au revoir.", couleurs.vert));
+                console.log();
                 break;
 
             default:
-                console.log("Erreur: Choix invalide.");
+                console.log(colorer("Erreur: Choix invalide.", couleurs.rouge));
         }
     }
 }
@@ -102,7 +103,7 @@ function afficherCandidatControlMenu()
             case 0:
                 break;
             default: 
-                console.log("Erreur: Choix invalide.");
+                console.log(colorer("Erreur: Choix invalide.", couleurs.rouge));
         }
     }
 }
@@ -125,7 +126,7 @@ function modificationCandidatControlMenu()
             case 0:
                 break;
             default:
-                console.log("Choix invalide.");
+                console.log(colorer("Erreur: Choix invalide.", couleurs.rouge));
         }
     }
 }
@@ -145,8 +146,9 @@ console.log(`
 7. Rechercher des candidats 
 8. Statistiques de l'élection
 0. Quitter`);
-
-    const choix = Number(prompt("Votre choix : "));
+    console.log();
+    const choix = Number(prompt(colorer("Votre choix : ", couleurs.bleu)));
+    console.log();
     return (choix);
 }
 
@@ -161,8 +163,9 @@ console.log(`
 2. Afficher les candidats par nombre de votes
 3. Afficher  les candidats d'un partie politique specifique
 0. Retour au menu principal`);
-
-    const choix = Number(prompt("Votre choix : "));
+    console.log();
+    const choix = Number(prompt(colorer("Votre choix : ", couleurs.bleu)));
+    console.log();
     return (choix);
 }
 
@@ -176,8 +179,9 @@ console.log(`
 1. Modifier l'âge d'un candidat
 2. Modifier le parti politique d'un candidat
 0. Retour au menu principal`);
-
-const choix = Number(prompt("Votre choix : "));
+console.log();
+const choix = Number(prompt(colorer("Votre choix : ", couleurs.bleu)));
+console.log();
 return (choix)
 }
 
@@ -238,12 +242,12 @@ function ajouterCandidat() {
     const prenom = prompt(colorer("Entrer le prénom : ", couleurs.cyan));
     let partipolitique = prompt(colorer("Entrer le parti politique (ou Indépendant): ", couleurs.cyan));
 
-    if (partipolitique.trim() === "") {
+    if ( partipolitique === ""|| partipolitique === null) {
     partipolitique = "Independant";
 }
     const age = Number(prompt(colorer("Entrer L'âge' : ", couleurs.cyan)));
 
-    if (age < 18) {
+    if (age < 18 && age < 65) {
         console.log();
         console.log(colorer("Erreur: Age invalide .", couleurs.rouge));
         console.log();
@@ -288,8 +292,9 @@ function ajouterPlusieursCandidats() {
         console.log();
 
         check = ajouterCandidat();
-        if (check)
+        if (check === true){
         i++;
+        }
     }
 }
 
@@ -358,7 +363,9 @@ function afficherCandidatsParPartiPolitique()
         return;
     }
 
-    const parti = prompt(colorer(`Entrer le parti politique (ou "Independant" ): `, couleurs.cyan));
+    let parti = prompt(colorer(`Entrer le parti politique (ou "Independant" ): `, couleurs.cyan));
+    if (parti == null || parti.trim() === "") {
+    parti = "Independant";}
 
     console.log();
     console.log(colorer(`--- CANDIDATS DU PARTI POLITIQUE : ${parti} ---`, couleurs.magenta));
@@ -376,6 +383,7 @@ function afficherCandidatsParPartiPolitique()
             found = 1;
         }
     }
+    console.log();
 
     if (found === 0) {
         console.log(colorer("--- Aucun candidat trouvé pour ce parti ---", couleurs.gras));
