@@ -27,13 +27,16 @@ const candidates = [
 function controlMenu() {
     let choix;
     while (choix !== 0) {
-        choix = afficheMenu();
+        choix = menuPrincipale();
         switch (choix) {
             case 1:
                 ajouterCandidat();
                 break;
             case 2:
                 ajouterPlusieursCandidats();
+                break;
+            case 3:
+                afficherCandidatControlMenu();
                 break;
             case 0:
                 console.log("Au revoir.");
@@ -45,8 +48,27 @@ function controlMenu() {
     }
 }
 controlMenu();
-// Affiche menu
-function afficheMenu() {
+
+// Afficher candidat(s) control menu
+function afficherCandidatControlMenu()
+{
+    let choix;
+    while(choix !== 0)
+    {
+        choix = AfficherCandidatsMenu();
+        switch (choix)
+        {
+            case 1:
+            case 0:
+                controlMenu()
+                break;
+            default: 
+                console.log("Erreur: Choix invalide.");
+        }
+    }
+}
+// Menu principale
+function menuPrincipale() {
     console.log(`=================================
 GESTION DES ÉLECTIONS
 =================================
@@ -64,6 +86,22 @@ GESTION DES ÉLECTIONS
     return (choix);
 }
 
+// Afficher candidat(s) menu
+function AfficherCandidatsMenu()
+{
+     console.log(`=================================
+AFFICHER LES CANDIDATS
+=================================
+1. Afficher la list des candidats
+2. Afficher les candidats par nombre de votes
+3. Afficher  les candidats d'un partie politique specifique
+0. Retour au menu principal`);
+
+    const choix = Number(prompt("Votre choix : "));
+    return (choix);
+}
+
+// Linear search
 function linearSearch(cin) {
     for (let i = 0; i < candidates.length; i++) {
         if (candidates[i].cin === cin) {
