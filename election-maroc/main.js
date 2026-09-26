@@ -27,59 +27,6 @@ const candidates = [
   { cin: "GG012345", nom: "Zerouali", prenom: "Hamza", partiPolitique: "Parti D", age: 35, electeurs: [] },
 ];
 
-// menu principale
-
-function afficherMenu() {
-    console.log();
-    console.log(`=================================
-GESTION DES ÉLECTIONS
-=================================
-1. Ajouter un candidat
-2. Ajouter plusieurs candidats
-3. Afficher les candidats
-4. Voter pour un candidat
-5. Modifier les informations d'un candidat
-6. Supprimer un candidat
-7. Rechercher des candidats 
-8. Statistiques de l'élection
-0. Quitter`);
-
-    console.log();
-
-    const choix = Number(prompt("Votre choix : "));
-    return (choix);
-}
-
-// Afficher les candidat menu
-
-function AfficherCandidatsMenu()
-{
-    console.log(`=================================
-AFFICHER LES CANDIDATS
-=================================
-1. Afficher la list des candidats
-2. Afficher les candidats par nombre de votes
-3. Afficher  les candidats d'un partie politique specifique
-0. Retour au menu principal`);
-
-const afficher = Number(prompt("Votre choix : "));
-return (afficher)
-}
-
-// Modification les candidat menu
-
-function AffichermodificationCandidatsMenu()
-{
-    console.log(`=================================
-MODIFIER LES INFORMATION DU CANDIDAT
-=================================
-1. Modifier le parti politique d'un candidat
-2. Modifier l'âge d'un candidat
-0. Retour au menu principal`);
-
-const modifier = Number(prompt("Votre choix : "));
-return (modifier)
-}
 
 // Control menu
 
@@ -190,6 +137,60 @@ function modificationCandidatControlMenu()
                 console.log("Choix invalide.");
         }
     }
+}
+
+// menu principale
+
+function afficherMenu() {
+    console.log();
+    console.log(`=================================
+GESTION DES ÉLECTIONS
+=================================
+1. Ajouter un candidat
+2. Ajouter plusieurs candidats
+3. Afficher les candidats
+4. Voter pour un candidat
+5. Modifier les informations d'un candidat
+6. Supprimer un candidat
+7. Rechercher des candidats 
+8. Statistiques de l'élection
+0. Quitter`);
+
+    console.log();
+
+    const choix = Number(prompt("Votre choix : "));
+    return (choix);
+}
+
+// Afficher les candidat menu
+
+function AfficherCandidatsMenu()
+{
+    console.log(`=================================
+AFFICHER LES CANDIDATS
+=================================
+1. Afficher la list des candidats
+2. Afficher les candidats par nombre de votes
+3. Afficher  les candidats d'un partie politique specifique
+0. Retour au menu principal`);
+
+const afficher = Number(prompt("Votre choix : "));
+return (afficher)
+}
+
+// Modification les candidat menu
+
+function AffichermodificationCandidatsMenu()
+{
+    console.log(`=================================
+MODIFIER LES INFORMATION DU CANDIDAT
+=================================
+1. Modifier le parti politique d'un candidat
+2. Modifier l'âge d'un candidat
+0. Retour au menu principal`);
+
+const modifier = Number(prompt("Votre choix : "));
+return (modifier)
 }
 
 // Linear search function par cin 
