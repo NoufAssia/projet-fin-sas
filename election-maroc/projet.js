@@ -19,7 +19,7 @@ const candidates = [
     { cin: "CC678901", nom: "Qadiri", prenom: "Adil", partiPolitique: "Parti D", age: 52, electeurs: [] },
     { cin: "DD789012", nom: "Rami", prenom: "Aya", partiPolitique: "Parti A", age: 29, electeurs: [] },
     { cin: "EE890123", nom: "Saidi", prenom: "Walid", partiPolitique: "Parti B", age: 46, electeurs: [] },
-    { cin: "FF901234", nom: "Tazi", prenom: "Leila", partiPolitique: "Parti C", age: 41, electeurs: [] },
+    { cin: "FF901234", nom: "Zerouali", prenom: "Leila", partiPolitique: "Parti C", age: 41, electeurs: [] },
     { cin: "GG012345", nom: "Zerouali", prenom: "Hamza", partiPolitique: "Parti D", age: 35, electeurs: [] },
 ];
 
@@ -47,6 +47,12 @@ function controlMenu() {
             case 6:
                 supprimerUnCandidat();
                 break;
+            case 7:
+                rechercherDesCandidats();
+                break;
+            case 8:
+                 Statistiques();
+                 break;
             case 0:
                 console.log("Au revoir.");
                 break;
@@ -166,14 +172,17 @@ function linearSearchCin(cin) {
 }
 
 // Linear search par nom
-function linearSearchParNom()
+function linearSearchParNom(nom)
 {
     for (let i = 0; i < candidates.length; i++)
     {
-        if 
+        if (candidates[i].nom === nom)
+        {
+            return candidates[i];
+        }
     }
+    return (-1);
 }
-
 
 // Bubble sort
 function bubbleSort(sortedCandidates)
@@ -445,7 +454,6 @@ function modifierpartiPolitiqueDeCandidat() {
 }
 
 // Supprimer un candidat
-
 function supprimerUnCandidat() {
     console.log();
     const candidatCin = prompt("Entrer la Cin du candidat : ");
@@ -483,7 +491,6 @@ function supprimerUnCandidat() {
 }
 
 // Rechercher des candidats par nom
-
 function rechercherDesCandidats() {
     const nom = prompt("Entrer le nom de candidat : ");
 
@@ -492,10 +499,101 @@ function rechercherDesCandidats() {
     if (rechercheNom === -1) {
         console.log();
         console.log("Erreur: candidat n'existe pas.");
+        console.log();
         return;
     }
     else {
         console.log();
-        console.log("Candidat est exist.");
+    console.log(`--- CANDIDATS DU NOM SPECIFIC : ${nom} ---`);
+    console.log();
+
+    let found = 0;
+
+    for (let i = 0; i < candidates.length; i++) {
+        if (candidates[i].nom === nom) {
+            const candidat = candidates[i];
+
+
+            console.log(`${i + 1}. ${candidat.prenom} ${candidat.nom} - CIN : ${candidat.cin} - parti politique : ${candidat.partiPolitique} - Âge :  ${candidat.age} - Votes : ${candidat.electeurs.length}.`);
+
+            found = 1;
+        }
     }
+    if (found === 0) {
+        console.log("--- Aucun candidat trouvé par ce nom. ---");
+    }
+    }
+}
+
+// Statistiques de l'élection
+function Statistiques() {
+    if (candidates.length === 0)
+    {
+        console.log();
+        console.log("--- Aucun candidat enregistré. ---");
+        console.log();
+        return;
+    }
+    // Nombre totale des candidats
+    console.log();
+    console.log(`- Voici le nombre totale des candidtas : ${candidates.length} .`);
+    console.log();
+
+    //nombre totale de votes
+    let resultat = 0;
+    for (let i = 0; i < candidates.length; i++) {
+        resultat += candidates[i].electeurs.length;
+    }
+    console.log();
+    console.log(`- Voici le nombre totale de votes exprimés dans toute l'élection : ${resultat}.`);
+    console.log();
+
+    // Top 3 candidats / votes
+    const sortedCandidates = [];
+
+    for (let i = 0; i < candidates.length; i++) {
+        sortedCandidates.push(candidates[i]);
+    }
+
+    bubbleSort(sortedCandidates);
+
+    let fin = 3;
+
+    if (sortedCandidates.length < 3) {
+        fin = sortedCandidates.length;
+    }
+    console.log();
+    console.log("- Voici le Top 3 candidats. ");
+    console.log();
+    for (let i = 0; i < fin; i++) {
+        const candidat = sortedCandidates[i];
+    
+        console.log(`${i + 1}. ${candidat.nom} ${candidat.prenom} - CIN : ${candidat.cin} - Parti politique : ${candidat.partiPolitique} - Âge : ${candidat.age} - Vote : ${candidat.electeurs.length}.`);
+    }
+    console.log();
+
+    // candidats par parti politique
+    const partisPolitique = [];
+
+    for (let i = 0; i < candidates.length; i++) {
+
+        const parti = candidates[i].partiPolitique;
+
+        if (partisPolitique[parti] === undefined) {
+            partisPolitique[parti] = 1;
+        } else {
+            partisPolitique[parti]++;
+        }
+    }
+
+    console.log();
+    console.log("- - Voici le nombre de candidtas par parti politique.");
+    console.log();
+
+    for (let parti in partisPolitique) {
+        console.log(`${parti} : ${partisPolitique[parti]} candidat(s)`);
+    }
+
+    console.log();
+
 }
