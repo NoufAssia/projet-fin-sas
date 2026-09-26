@@ -1,3 +1,5 @@
+const { colors } = require("prompt");
+
 const prompt = require("prompt-sync")();
 // Coulour 
 const couleurs = {
@@ -151,9 +153,10 @@ console.log(`
 // Afficher candidat(s) menu
 function AfficherCandidatsMenu()
 {
-     console.log(`=================================
+     console.log(colorer(`=================================
 AFFICHER LES CANDIDATS
-=================================
+================================= `, couleurs.jaune));
+console.log(`
 1. Afficher la list des candidats
 2. Afficher les candidats par nombre de votes
 3. Afficher  les candidats d'un partie politique specifique
@@ -166,9 +169,10 @@ AFFICHER LES CANDIDATS
 // Modification les candidat menu
 function AffichermodificationCandidatsMenu()
 {
-    console.log(`=================================
+    console.log(colorer(`=================================
 MODIFIER LES INFORMATION DU CANDIDAT
-=================================
+================================= `, couleurs.jaune));
+console.log(`
 1. Modifier l'âge d'un candidat
 2. Modifier le parti politique d'un candidat
 0. Retour au menu principal`);
@@ -188,16 +192,14 @@ function linearSearchCin(cin) {
 }
 
 // Linear search par nom
-function linearSearchParNom(nom)
-{
-    for (let i = 0; i < candidates.length; i++)
-    {
-        if (candidates[i].nom === nom)
-        {
-            return candidates[i];
+function linearSearchParNom(nom){
+    let result = [];
+    for (let i = 0; i < candidates.length; i++){
+        if (candidates[i].nom === nom){
+            result.push(candidates[i]);
         }
     }
-    return (-1);
+    return (result);
 }
 
 // Bubble sort
@@ -221,29 +223,29 @@ function bubbleSort(sortedCandidates)
 // Ajouter un candidat
 function ajouterCandidat() {
     console.log();
-    const cin = prompt("Entrer la CIN : ");
+    const cin = prompt(colorer("Entrer la CIN : ", couleurs.cyan));
 
     const candidatDejaExist = linearSearchCin(cin);
 
     if (candidatDejaExist !== -1) {
         console.log();
-        console.log("Erreur: Candidat déja existe.")
+        console.log(colorer("Erreur: Candidat déja existe.", couleurs.rouge))
         console.log();
         return false;
     }
 
-    const nom = prompt("Entrer le nom : ");
-    const prenom = prompt("Entrer le prénom : ");
-    let partipolitique = prompt("Entrer le parti politique (ou Indépendant): ");
+    const nom = prompt(colorer("Entrer le nom : ", couleurs.cyan));
+    const prenom = prompt(colorer("Entrer le prénom : ", couleurs.cyan));
+    let partipolitique = prompt(colorer("Entrer le parti politique (ou Indépendant): ", couleurs.cyan));
 
     if (partipolitique.trim() === "") {
-    partipolitique = "Indépendant";
+    partipolitique = "Independant";
 }
-    const age = Number(prompt("Entrer L'âge' : "));
+    const age = Number(prompt(colorer("Entrer L'âge' : ", couleurs.cyan)));
 
     if (age < 18) {
         console.log();
-        console.log("Erreur: Age invalide .");
+        console.log(colorer("Erreur: Age invalide .", couleurs.rouge));
         console.log();
         return false;
     }
@@ -261,7 +263,7 @@ function ajouterCandidat() {
     candidates.push(candidat);
 
     console.log();
-    console.log("Candidat(s) ajouté avec succès.");
+    console.log(colorer("Candidat(s) ajouté avec succès.", couleurs.vert));
     console.log();
     return true;
 }
@@ -269,12 +271,20 @@ function ajouterCandidat() {
 // Ajouter plusieurs candidats à la fois.
 function ajouterPlusieursCandidats() {
     console.log();
-    const number = Number(prompt("Combien de candidats souhaitez-vous ajouter ? : "));
+    const number = Number(prompt(colorer("Combien de candidats souhaitez-vous ajouter ? : ", couleurs.cyan)));
+
+    if (number <= 0)
+    {
+        console.log();
+        console.log(colorer("Erreur: nombre invalide.", couleurs.rouge));
+        console.log();
+        return;
+    }
 
     let i = 0;
     while (i < number) {
         console.log();
-        console.log(`--- Candidat numéro: ${i + 1} ---`);
+        console.log(colorer(`--- Candidat numéro: ${i + 1} ---`,couleurs.magenta));
         console.log();
 
         check = ajouterCandidat();
@@ -289,13 +299,13 @@ function afficherLesCandidats()
     if (candidates.length === 0)
     {
         console.log();
-        console.log("--- Aucun candidat enregistré. ---");
+        console.log(colorer("--- Aucun candidat enregistré ---",couleurs.gras));
         console.log();
         return;
     }
 
     console.log();
-    console.log("--- Voici les candidats enregistré. ---");
+    console.log(colorer("--- LA LIST DES CANDIDATS ---", couleurs.magenta));
     console.log();
 
     for (let i = 0; i < candidates.length; i++)
@@ -312,7 +322,7 @@ function afficherCandidatsParNombreDeVotes()
     if (candidates.length === 0)
     {
         console.log();
-        console.log("--- Aucun candidat enregistré. ---");
+        console.log(colorer("--- Aucun candidat enregistré ---",couleurs.gras));
         console.log();
         return;
     }
@@ -326,7 +336,7 @@ function afficherCandidatsParNombreDeVotes()
     sortedCandidates = bubbleSort(sortedCandidates);
 
     console.log();
-    console.log("--- CANDIDATS PAR NOMBRE DE VOTES ---");
+    console.log(colorer("--- CANDIDATS PAR NOMBRE DE VOTES ---", couleurs.magenta));
     console.log();
 
     for (let i = 0; i < sortedCandidates.length; i++)
@@ -343,15 +353,15 @@ function afficherCandidatsParPartiPolitique()
     if (candidates.length === 0)
     {
         console.log();
-        console.log("--- Aucun candidat enregistré. ---");
+        console.log(colorer("--- Aucun candidat enregistré ---", couleurs.gras));
         console.log();
         return;
     }
 
-    const parti = prompt("Entrer le parti politique : ");
+    const parti = prompt(colorer(`Entrer le parti politique (ou "Independant" ): `, couleurs.cyan));
 
     console.log();
-    console.log(`--- CANDIDATS DU PARTI POLITIQUE : ${parti} ---`);
+    console.log(colorer(`--- CANDIDATS DU PARTI POLITIQUE : ${parti} ---`, couleurs.magenta));
     console.log();
 
     let found = 0;
@@ -368,7 +378,7 @@ function afficherCandidatsParPartiPolitique()
     }
 
     if (found === 0) {
-        console.log("--- Aucun candidat trouvé pour ce parti. ---");
+        console.log(colorer("--- Aucun candidat trouvé pour ce parti ---", couleurs.gras));
     }
 }
 
@@ -376,7 +386,7 @@ function afficherCandidatsParPartiPolitique()
 function voter()
 {
         console.log();
-    const electeurCin = prompt("Saisir Ta propre CIN : ");
+    const electeurCin = prompt(colorer("Saisir Ta propre CIN : ", couleurs.cyan));
 
     let found = 0;
     for (let i = 0; i < candidates.length; i++) {
@@ -389,50 +399,50 @@ function voter()
 
     if (found === 1) {
         console.log();
-        console.log(`Vous avez déjà voté et vous n'avez pas le droit de modifier votre vote ni de voter à nouveau.`);
+        console.log(colorer(`Vous avez déjà voté et vous n'avez pas le droit de modifier votre vote ni de voter à nouveau.`, couleurs.rouge));
         console.log();
         return;
     }
     else {
         // find le candidat
         console.log();
-        const candidatCin = prompt("Entrer la CIN du candidat : ");
+        const candidatCin = prompt(colorer("Entrer la CIN du candidat : ", couleurs.cyan));
         console.log();
 
         const candidat = linearSearchCin(candidatCin);
 
         if (candidat === -1) {
-            console.log("Erreur: candidat n'existe pas.");
+            console.log(colorer("Erreur: candidat n'existe pas.", couleurs.rouge));
             console.log();
             return;
         }
         else {
             candidat.electeurs.push(electeurCin);
         }
-        console.log("Votre vote a enregistré avec succès.");
+        console.log(colorer("Votre vote a enregistré avec succès.", couleurs.vert));
         console.log();
     }
 }
 
 // Modifier l'age d'un candidat
 function modifierAgeDeCandidat() {
-    const candidatCin = prompt("Entrer la Cin du candidat : ");
+    const candidatCin = prompt(colorer("Entrer la Cin du candidat : ", couleurs.cyan));
 
     const candidat = linearSearchCin(candidatCin);
 
     if (candidat === -1) {
         console.log();
-        console.log("Erreur: candidat n'existe pas.");
+        console.log(colorer("Erreur: candidat n'existe pas.", couleurs.rouge));
         console.log();
         return;
     }
     else {
 
-        const nouveauAge = Number(prompt("Enter le nouvel age : "));
+        const nouveauAge = Number(prompt(colorer("Enter le nouvel age : ", couleurs.cyan)));
         if (nouveauAge < 18)
         {
             console.log();
-            console.log("Erreur: Age invalide .");
+            console.log(colorer("Erreur: Age invalide .", couleurs.rouge));
             console.log();
             return; 
         }
@@ -440,31 +450,31 @@ function modifierAgeDeCandidat() {
         candidat.age = nouveauAge;
 
         console.log();
-        console.log("Les informations du candidat ont été mises à jour avec succès. ");
+        console.log(colorer("Les informations du candidat ont été mises à jour avec succès. ", couleurs.vert));
         console.log();
     }
 }
 
 // Modifier le parti politique d'un candidat
 function modifierpartiPolitiqueDeCandidat() {
-    const candidatCin = prompt("Entrer la Cin du candidat : ");
+    const candidatCin = prompt(colorer("Entrer la Cin du candidat : ", couleurs.cyan));
 
     const candidat = linearSearchCin(candidatCin);
 
     if (candidat === -1) {
         console.log();
-        console.log("Erreur: candidat n'existe pas.");
+        console.log(colorer("Erreur: candidat n'existe pas.", couleurs.rouge));
         console.log();
         return;
     }
     else {
 
-        const nouveauParti = Number(prompt("Enter le nouvel parti politique : "));
+        const nouveauParti = Number(prompt(colorer("Enter le nouvel parti politique : ", couleurs.cyan)));
 
         candidat.partiPolitique = nouveauParti;
 
         console.log();
-        console.log("Les informations du candidat ont été mises à jour avec succès. ");
+        console.log(colorer("Les informations du candidat ont été mises à jour avec succès. ", couleurs.vert));
         console.log();
     }
 }
@@ -472,79 +482,78 @@ function modifierpartiPolitiqueDeCandidat() {
 // Supprimer un candidat
 function supprimerUnCandidat() {
     console.log();
-    const candidatCin = prompt("Entrer la Cin du candidat : ");
+    const candidatCin = prompt(colorer("Entrer la Cin du candidat : ", couleurs.cyan));
 
     const candidat = linearSearchCin(candidatCin);
 
     if (candidat === -1) {
         console.log();
-        console.log("Erreur: candidat n'existe pas.");
+        console.log(colorer("Erreur: candidat n'existe pas.", couleurs.rouge));
         console.log();
         return;
     }
     else {
         console.log();
-        console.log("Fais attention cette procédure supprimera le candidat de la base de données !");
+        console.log(colorer("Fais attention cette procédure supprimera le candidat de la base de données !", couleurs.jaune));
         console.log();
-        const safecheck = prompt("Es-tu sûr? (Non / Oui) : ");
+        const safecheck = prompt(colorer("Es-tu sûr? (Non / Oui) : ", couleurs.cyan));
 
         if (safecheck === "Non") {
             console.log();
-            console.log("La suppression a été annulée.");
+            console.log(colorer("La suppression a été annulée.", couleurs.gras));
             return;
         }
         else if (safecheck === "Oui") {
             candidates.splice(candidat, 1);
 
             console.log();
-            console.log("Le candidat a été supprimé avec succès.");
+            console.log(colorer("Le candidat a été supprimé avec succès.", couleurs.vert));
             console.log();
             return;
         }
         console.log();
-        console.log("Votre réponse est incorrecte. La suppression a été annulée.");
+        console.log(colorer("Votre réponse est incorrecte. La suppression a été annulée.", couleurs.gras));
     }
 }
 
 // Rechercher des candidats par nom
 function rechercherDesCandidats() {
-    const nom = prompt("Entrer le nom de candidat : ");
+    const nom = prompt(colorer("Entrer le nom de candidat : ", couleurs.cyan));
 
     const rechercheNom = linearSearchParNom(nom);
 
-    if (rechercheNom === -1) {
+    if (rechercheNom.length === 0) {
         console.log();
-        console.log("Erreur: candidat n'existe pas.");
+        console.log(colorer("Erreur: candidat n'existe pas.", couleurs.rouge));
         console.log();
         return;
     }
     else {
         console.log();
-    console.log(`--- CANDIDATS DU NOM SPECIFIC : ${nom} ---`);
-    console.log();
+        console.log(colorer(`--- CANDIDATS DU NOM SPECIFIC : ${nom} ---`, couleurs.magenta));
+        console.log();
 
-    for (let i = 0; i < candidates.length; i++) {
-        if (candidates[i].nom === nom) {
-            const candidat = candidates[i];
+        for (let i = 0; i < rechercheNom.length; i++)
+        {
+            const candidat = rechercheNom[i];
 
             console.log(`${i + 1}. ${candidat.prenom} ${candidat.nom} - CIN : ${candidat.cin} - parti politique : ${candidat.partiPolitique} - Âge :  ${candidat.age} - Votes : ${candidat.electeurs.length}.`);
         }
     }
     }
-}
 
 // Statistiques de l'élection
 function Statistiques() {
     if (candidates.length === 0)
     {
         console.log();
-        console.log("--- Aucun candidat enregistré. ---");
+        console.log(colorer("--- Aucun candidat enregistré ---", couleurs.gras));
         console.log();
         return;
     }
     // Nombre totale des candidats
     console.log();
-    console.log(`- Voici le nombre totale des candidtas : ${candidates.length} .`);
+    console.log(colorer(`- Voici le nombre totale des candidtas : ${candidates.length} .`, couleurs.bleu));
     console.log();
 
     //nombre totale de votes
@@ -553,7 +562,7 @@ function Statistiques() {
         resultat += candidates[i].electeurs.length;
     }
     console.log();
-    console.log(`- Voici le nombre totale de votes exprimés dans toute l'élection : ${resultat}.`);
+    console.log(colorer(`- Voici le nombre totale de votes exprimés dans toute l'élection : ${resultat}.`, couleurs.bleu));
     console.log();
 
     // Top 3 candidats / votes
@@ -571,7 +580,7 @@ function Statistiques() {
         fin = sortedCandidates.length;
     }
     console.log();
-    console.log("- Voici le Top 3 candidats. ");
+    console.log(colorer("- Voici le Top 3 candidats. ", couleurs.bleu));
     console.log();
     for (let i = 0; i < fin; i++) {
         const candidat = sortedCandidates[i];
@@ -586,6 +595,10 @@ function Statistiques() {
     for (let i = 0; i < candidates.length; i++) {
 
         const parti = candidates[i].partiPolitique;
+        if (partisPolitique[parti] === NaN)
+        {
+            continue;
+        }
 
         if (partisPolitique[parti] === undefined) {
             partisPolitique[parti] = 1;
@@ -595,7 +608,7 @@ function Statistiques() {
     }
 
     console.log();
-    console.log("- Voici le nombre de candidtas par parti politique.");
+    console.log(colorer("- Voici le nombre de candidtas par parti politique.", couleurs.bleu));
     console.log();
 
     for (let parti in partisPolitique) {
