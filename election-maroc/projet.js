@@ -59,6 +59,11 @@ function afficherCandidatControlMenu()
         switch (choix)
         {
             case 1:
+                afficherLesCandidats();
+                break;
+            case 2:
+                afficherCandidatsParNombreDeVotes();
+                break;
             case 0:
                 controlMenu()
                 break;
@@ -109,6 +114,24 @@ function linearSearch(cin) {
         }
     }
     return (-1);
+}
+
+// Bubble sort
+function bubbleSort(sortedCandidates)
+{
+    for (let i = 0; i < sortedCandidates.length - 1; i++)
+    {
+        for (let j = 0; j < sortedCandidates.length - 1 - i; j++)
+        {
+            if (sortedCandidates[j].electeurs.length < sortedCandidates[j + 1].electeurs.length)
+            {
+                let swap = sortedCandidates[j];
+                sortedCandidates[j] = sortedCandidates[j + 1];
+                sortedCandidates[j + 1] = swap;
+            }
+        }
+    }
+    return (sortedCandidates)
 }
 
 // Ajouter un candidat
@@ -169,4 +192,58 @@ function ajouterPlusieursCandidats() {
         if (check)
         i++;
     }
+}
+
+// Afficher la liste des candidats.
+function afficherLesCandidats()
+{
+    if (candidates.length === 0)
+    {
+        console.log();
+        console.log("--- Aucun candidat enregistré. ---");
+        console.log();
+        return;
+    }
+
+    console.log();
+    console.log("--- Voici les candidats enregistré. ---");
+    console.log();
+
+    for (let i = 0; i < candidates.length; i++)
+    {
+        const candidat = candidates[i];
+        console.log(`${i + 1}. ${candidat.nom} ${candidat.prenom} - CIN : ${candidat.cin} - Parti politique : ${candidat.partiPolitique} - Âge : ${candidat.age} - Vote : ${candidat.electeurs.length}.`);
+    }
+    console.log();
+}
+
+// Afficher candidats par nombre de votes
+function afficherCandidatsParNombreDeVotes()
+{
+    if (candidates.length === 0)
+    {
+        console.log();
+        console.log("--- Aucun candidat enregistré. ---");
+        console.log();
+        return;
+    }
+
+    let sortedCandidates = [];
+    for (let i = 0; i < candidates.length; i++)
+    {
+        sortedCandidates[i] = candidates[i];
+    }
+
+    sortedCandidates = bubbleSort(sortedCandidates);
+
+    console.log();
+    console.log("--- CANDIDATS PAR NOMBRE DE VOTES ---");
+    console.log();
+
+    for (let i = 0; i < sortedCandidates.length; i++)
+    {
+        const candidat = sortedCandidates[i];
+        console.log(`${i + 1}. ${candidat.nom} ${candidat.prenom} - CIN : ${candidat.cin} - Parti politique : ${candidat.partiPolitique} - Âge : ${candidat.age} - Vote : ${candidat.electeurs.length}.`);
+    }
+    console.log();
 }
