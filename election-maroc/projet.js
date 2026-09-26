@@ -38,6 +38,9 @@ function controlMenu() {
             case 3:
                 afficherCandidatControlMenu();
                 break;
+            case 4: 
+                voter();
+                break;
             case 0:
                 console.log("Au revoir.");
                 break;
@@ -64,13 +67,21 @@ function afficherCandidatControlMenu()
             case 2:
                 afficherCandidatsParNombreDeVotes();
                 break;
+            case 3:
+                afficherCandidatsParPartiPolitique();
+                break;
             case 0:
-                controlMenu()
                 break;
             default: 
                 console.log("Erreur: Choix invalide.");
         }
     }
+}
+
+// Menu de modifier les informations d'un candidat 
+function modificationCandidatControlMenu()
+{
+    
 }
 // Menu principale
 function menuPrincipale() {
@@ -106,14 +117,26 @@ AFFICHER LES CANDIDATS
     return (choix);
 }
 
-// Linear search
-function linearSearch(cin) {
+// Linear search pour cin
+function linearSearchCin(cin) {
     for (let i = 0; i < candidates.length; i++) {
         if (candidates[i].cin === cin) {
             return candidates[i];
         }
     }
     return (-1);
+}
+
+// linear search pour parti
+function linearSearchparti(parti) {
+    const resultats = [];
+
+    for (let i = 0; i < candidates.length; i++) {
+        if (candidates[i].partiPolitique === parti) {
+            resultats[i] = candidates[i];
+        }
+    }
+    return resultats;
 }
 
 // Bubble sort
@@ -139,7 +162,7 @@ function ajouterCandidat() {
     console.log();
     const cin = prompt("Entrer la CIN : ");
 
-    const candidatDejaExist = linearSearch(cin);
+    const candidatDejaExist = linearSearchCin(cin);
 
     if (candidatDejaExist !== -1) {
         console.log();
@@ -150,8 +173,13 @@ function ajouterCandidat() {
 
     const nom = prompt("Entrer le nom : ");
     const prenom = prompt("Entrer le prénom : ");
-    const partipolitique = prompt("Entrer le parti politique : ");
+    let partipolitique = prompt("Entrer le parti politique (ou Indépendant): ");
+
+    if (partipolitique.trim() === "") {
+    partipolitique = "Indépendant";
+}
     const age = Number(prompt("Entrer L'âge' : "));
+
     if (age < 18) {
         console.log();
         console.log("Erreur: Age invalide .");
@@ -247,3 +275,82 @@ function afficherCandidatsParNombreDeVotes()
     }
     console.log();
 }
+
+// Afficher les candidats d'un parti politique spécifique
+function afficherCandidatsParPartiPolitique()
+{
+    if (candidates.length === 0)
+    {
+        console.log();
+        console.log("--- Aucun candidat enregistré. ---");
+        console.log();
+        return;
+    }
+
+    const parti = prompt("Entrer le parti politique : ");
+
+    console.log();
+    console.log(`--- CANDIDATS DU PARTI POLITIQUE : ${parti} ---`);
+    console.log();
+
+    let found = 0;
+
+    for (let i = 0; i < candidates.length; i++) {
+        if (candidates[i].partiPolitique === parti) {
+            const candidat = candidates[i];
+
+
+            console.log(`${i + 1}. ${candidat.prenom} ${candidat.nom} - CIN : ${candidat.cin} - parti politique : ${candidat.partiPolitique} - Âge :  ${candidat.age} - Votes : ${candidat.electeurs.length}.`);
+
+            found = 1;
+        }
+    }
+
+    if (found === 0) {
+        console.log("--- Aucun candidat trouvé pour ce parti. ---");
+    }
+}
+
+// Voter sur un candidat
+function voter()
+{
+        console.log();
+    const electeurCin = prompt("Saisir Ta propre CIN : ");
+
+    let found = 0;
+    for (let i = 0; i < candidates.length; i++) {
+        for (let j = 0; j < candidates[i].electeurs.length; j++) {
+            if (candidates[i].electeurs[j] === electeurCin) {
+                found = 1;
+            }
+        }
+    }
+
+    if (found === 1) {
+        console.log();
+        console.log(`Vous avez déjà voté et vous n'avez pas le droit de modifier votre vote ni de voter à nouveau.`);
+        console.log();
+        return;
+    }
+    else {
+        // find le candidat
+        console.log();
+        const candidatCin = prompt("Entrer la CIN du candidat : ");
+        console.log();
+
+        const candidat = linearSearchCin(candidatCin);
+
+        if (candidat === -1) {
+            console.log("Erreur: candidat n'existe pas.");
+            console.log();
+            return;
+        }
+        else {
+            candidat.electeurs.push(electeurCin);
+        }
+        console.log("Votre vote a enregistré avec succès.");
+        console.log();
+    }
+}
+
+// Modifier les informations d'un candidat
