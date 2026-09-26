@@ -32,6 +32,9 @@ function controlMenu() {
             case 1:
                 ajouterCandidat();
                 break;
+            case 2:
+                ajouterPlusieursCandidats();
+                break;
             case 0:
                 console.log("Au revoir.");
                 break;
@@ -81,7 +84,7 @@ function ajouterCandidat() {
         console.log();
         console.log("Erreur: Candidat déja existe.")
         console.log();
-        return;
+        return false;
     }
 
     const nom = prompt("Entrer le nom : ");
@@ -92,7 +95,7 @@ function ajouterCandidat() {
         console.log();
         console.log("Erreur: Age invalide .");
         console.log();
-        return;
+        return false;
     }
 
     // Candidat object
@@ -108,6 +111,24 @@ function ajouterCandidat() {
     candidates.push(candidat);
 
     console.log();
-    console.log("Candidat ajouté avec succès.");
+    console.log("Candidat(s) ajouté avec succès.");
     console.log();
+    return true;
+}
+
+// Ajouter plusieurs candidats à la fois.
+function ajouterPlusieursCandidats() {
+    console.log();
+    const number = Number(prompt("Combien de candidats souhaitez-vous ajouter ? : "));
+
+    let i = 0;
+    while (i < number) {
+        console.log();
+        console.log(`--- Candidat numéro: ${i + 1} ---`);
+        console.log();
+
+        check = ajouterCandidat();
+        if (check)
+        i++;
+    }
 }
