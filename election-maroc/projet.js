@@ -158,9 +158,9 @@ function AfficherCandidatsMenu() {
 // Modification les candidat menu
 function AffichermodificationCandidatsMenu() {
     console.log();
-    console.log(colorer(`=================================
-     MODIFIER LES INFORMATION DU CANDIDAT
-================================= `, couleurs.jaune));
+    console.log(colorer(`===========================================
+   MODIFIER LES INFORMATION DU CANDIDAT
+=========================================== `, couleurs.jaune));
     console.log(`
 1. Modifier l'âge d'un candidat
 2. Modifier le parti politique d'un candidat
@@ -283,7 +283,7 @@ function ajouterCandidat() {
     }
 
     const age = Number(prompt(colorer("Entrer L'âge' (ou 0 pour annuler) : ", couleurs.cyan)));
-    if (age === "0")
+    if (age === 0)
     {
         return;
     }
@@ -316,7 +316,12 @@ function ajouterCandidat() {
 // Ajouter plusieurs candidats à la fois.
 function ajouterPlusieursCandidats() {
     console.log();
-    const number = Number(prompt(colorer("Combien de candidats souhaitez-vous ajouter ? : ", couleurs.cyan)));
+    const number = Number(prompt(colorer("Combien de candidats souhaitez-vous ajouter ? (ou 0 pour annuler): ", couleurs.cyan)));
+
+    if (number === 0)
+    {
+        return;
+    }
 
     if (isNaN(number) || number <= 0) {
         console.log();
@@ -331,7 +336,7 @@ function ajouterPlusieursCandidats() {
         console.log(colorer(`--- Candidat numéro: ${i + 1} ---`, couleurs.magenta));
         console.log();
 
-        const check = ajouterCandidat();      
+        ajouterCandidat();      
         i++;
     }
 }
@@ -525,7 +530,12 @@ function modifierAgeDeCandidat() {
 
         const nouveauAge = Number(prompt(colorer("Enter le nouvel age (ou 0 pour annuler): ", couleurs.cyan)));
 
-        if (isNaN(age) || nouveauAge < 18 || nouveauAge > 65) {
+        if (nouveauAge === 0)
+        {
+            return;
+        }
+
+        if (isNaN(nouveauAge) || nouveauAge < 18 || nouveauAge > 65){
             console.log();
             console.log(colorer("Erreur: Age invalide .", couleurs.rouge));
             console.log();
@@ -566,7 +576,7 @@ function modifierpartiPolitiqueDeCandidat() {
     }
     else {
 
-        let nouveauParti = prompt(colorer("Enter le nouvel parti politique (ou 0 pour annuler) : "));
+        let nouveauParti = prompt(colorer("Enter le nouvel parti politique (ou 0 pour annuler) : ", couleurs.cyan));
 
         if (nouveauParti === "0")
         {
@@ -594,7 +604,7 @@ function modifierpartiPolitiqueDeCandidat() {
 // Supprimer un candidat
 function supprimerUnCandidat() {
     console.log();
-    const candidatCin = prompt(colorer("Entrer la Cin du candidat (ou 0 pour annuler) : "));
+    const candidatCin = prompt(colorer("Entrer la Cin du candidat (ou 0 pour annuler) : ", couleurs.cyan));
 
     if (candidatCin === "0")
     {
@@ -643,7 +653,7 @@ function supprimerUnCandidat() {
 
 // Rechercher des candidats par nom
 function rechercherDesCandidats() {
-    const nom = prompt(colorer("Entrer le nom de candidat (ou 0 pour annuler) : "));
+    const nom = prompt(colorer("Entrer le nom de candidat (ou 0 pour annuler) : ", couleurs.cyan));
 
     if (nom === "0")
     {
