@@ -589,14 +589,14 @@ function rechercherDesCandidats() {
         console.log();
         console.log(colorer("Erreur : le Nom est obligatoire.", couleurs.rouge));
         console.log();
-        return false;
+        return;
         }
 
     const rechercheNom = linearSearchParNom(nom);
 
     if (rechercheNom.length === 0) {
         console.log();
-        console.log(colorer("Erreur: candidat n'existe pas.", couleurs.rouge));
+        console.log(colorer("Erreur: candidat(s) n'existe pas.", couleurs.rouge));
         console.log();
         return;
     }
@@ -660,7 +660,7 @@ function Statistiques() {
     console.log();
 
     // candidats par parti politique
-    const partisPolitique = [];
+    const partisPolitique = {};
 
     for (let i = 0; i < candidates.length; i++) {
 
