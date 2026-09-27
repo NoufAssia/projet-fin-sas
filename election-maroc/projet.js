@@ -178,6 +178,16 @@ function linearSearchCin(cin) {
     return (-1);
 }
 
+// Linear search pour index cin
+function linearSearchIndex(cin) {
+    for (let i = 0; i < candidates.length; i++) {
+        if (candidates[i].cin === cin) {
+            return i;
+        }
+    }
+    return (-1);
+}
+
 // Linear search par nom
 function linearSearchParNom(nom) {
     let result = [];
@@ -207,6 +217,12 @@ function bubbleSort(sortedCandidates) {
 function ajouterCandidat() {
     console.log();
     const cin = prompt(colorer("Entrer la CIN : ", couleurs.cyan));
+    if (cin.trim() === "") {
+        console.log();
+        console.log(colorer("Erreur : la Cin est obligatoire.", couleurs.rouge));
+        console.log();
+        return false;
+    }
 
     const candidatDejaExist = linearSearchCin(cin);
 
@@ -218,15 +234,34 @@ function ajouterCandidat() {
     }
 
     const nom = prompt(colorer("Entrer le nom : ", couleurs.cyan));
+    if (nom.trim() === "") {
+        console.log();
+        console.log(colorer("Erreur : le Nom est obligatoire.", couleurs.rouge));
+        console.log();
+        return false;
+    }
     const prenom = prompt(colorer("Entrer le prénom : ", couleurs.cyan));
-    let partiPolitique = prompt(colorer("Entrer le parti politique (ou Indépendant): ", couleurs.cyan));
+    if (prenom.trim() === "") {
+        console.log();
+        console.log(colorer("Erreur : le Prenom est obligatoire.", couleurs.rouge));
+        console.log();
+        return false;
+    }
+    let partiPolitique = prompt(colorer("Entrer le parti politique (ou Independant): ", couleurs.cyan));
 
     if (partiPolitique.trim() === "") {
         partiPolitique = "Independant";
     }
+    else if(!isNaN(partiPolitique))
+    {
+        console.log();
+        console.log(colorer("Erreur : le parti politique ne peut pas être un nombre.", couleurs.rouge));
+        console.log();
+        return false;
+    }
     const age = Number(prompt(colorer("Entrer L'âge' : ", couleurs.cyan)));
 
-    if (age < 18 && age < 65) {
+    if (isNaN(age) || age < 18 || age > 65) {
         console.log();
         console.log(colorer("Erreur: Age invalide .", couleurs.rouge));
         console.log();
@@ -256,7 +291,7 @@ function ajouterPlusieursCandidats() {
     console.log();
     const number = Number(prompt(colorer("Combien de candidats souhaitez-vous ajouter ? : ", couleurs.cyan)));
 
-    if (number <= 0) {
+    if (isNaN(number) || number <= 0) {
         console.log();
         console.log(colorer("Erreur: nombre invalide.", couleurs.rouge));
         console.log();
@@ -333,9 +368,16 @@ function afficherCandidatsParPartiPolitique() {
         return;
     }
 
-    let parti = prompt(colorer(`Entrer le parti politique (ou "Independant" ): `, couleurs.cyan));
-    if (parti.trim() === "") {
-        parti = "Independant";
+    let partiPolitique = prompt(colorer(`Entrer le parti politique (ou "Independant" ): `, couleurs.cyan));
+    if (partiPolitique.trim() === "") {
+        partiPolitique = "Independant";
+    }
+    else if(!isNaN(partiPolitique))
+    {
+        console.log();
+        console.log(colorer("Erreur : le parti politique ne peut pas être un nombre.", couleurs.rouge));
+        console.log();
+        return;
     }
 
     console.log();
@@ -345,7 +387,7 @@ function afficherCandidatsParPartiPolitique() {
     let found = 0;
 
     for (let i = 0; i < candidates.length; i++) {
-        if (candidates[i].partiPolitique === parti) {
+        if (candidates[i].partiPolitique === partiPolitique) {
             const candidat = candidates[i];
 
 
@@ -357,7 +399,9 @@ function afficherCandidatsParPartiPolitique() {
     console.log();
 
     if (found === 0) {
+        console.log();
         console.log(colorer("--- Aucun candidat trouvé pour ce parti ---", couleurs.gras));
+        console.log();
     }
 }
 
@@ -365,6 +409,12 @@ function afficherCandidatsParPartiPolitique() {
 function voter() {
     console.log();
     const electeurCin = prompt(colorer("Saisir Ta propre CIN : ", couleurs.cyan));
+    if (electeurCin.trim() === "") {
+        console.log();
+        console.log(colorer("Erreur : la Cin est obligatoire.", couleurs.rouge));
+        console.log();
+        return;
+    }
 
     let found = 0;
     for (let i = 0; i < candidates.length; i++) {
@@ -381,13 +431,20 @@ function voter() {
         console.log();
         return;
     }
-    else {
+    
         // find le candidat
-        console.log();
-        const candidatCin = prompt(colorer("Entrer la CIN du candidat : ", couleurs.cyan));
-        console.log();
+    console.log();
+    const candidatCin = prompt(colorer("Entrer la CIN du candidat : ", couleurs.cyan));
+    console.log();
 
-        const candidat = linearSearchCin(candidatCin);
+        if (candidatCin.trim() === "") {
+        console.log();
+        console.log(colorer("Erreur : la Cin est obligatoire.", couleurs.rouge));
+        console.log();
+        return;
+        }
+
+    const candidat = linearSearchCin(candidatCin);
 
         if (candidat === -1) {
             console.log(colorer("Erreur: candidat n'existe pas.", couleurs.rouge));
@@ -399,12 +456,19 @@ function voter() {
         }
         console.log(colorer("Votre vote a enregistré avec succès.", couleurs.vert));
         console.log();
-    }
+    
 }
 
 // Modifier l'age d'un candidat
 function modifierAgeDeCandidat() {
     const candidatCin = prompt(colorer("Entrer la Cin du candidat : ", couleurs.cyan));
+
+    if (candidatCin.trim() === "") {
+        console.log();
+        console.log(colorer("Erreur : la Cin est obligatoire.", couleurs.rouge));
+        console.log();
+        return;
+    }
 
     const candidat = linearSearchCin(candidatCin);
 
@@ -417,7 +481,7 @@ function modifierAgeDeCandidat() {
     else {
 
         const nouveauAge = Number(prompt(colorer("Enter le nouvel age : ", couleurs.cyan)));
-        if (nouveauAge < 18 && nouveauAge > 65) {
+        if (isNaN(age) || nouveauAge < 18 || nouveauAge > 65) {
             console.log();
             console.log(colorer("Erreur: Age invalide .", couleurs.rouge));
             console.log();
@@ -436,6 +500,13 @@ function modifierAgeDeCandidat() {
 function modifierpartiPolitiqueDeCandidat() {
     const candidatCin = prompt(colorer("Entrer la Cin du candidat : ", couleurs.cyan));
 
+    if (candidatCin.trim() === "") {
+        console.log();
+        console.log(colorer("Erreur : la Cin est obligatoire.", couleurs.rouge));
+        console.log();
+        return;
+    }
+
     const candidat = linearSearchCin(candidatCin);
 
     if (candidat === -1) {
@@ -449,7 +520,14 @@ function modifierpartiPolitiqueDeCandidat() {
         let nouveauParti = prompt(colorer("Enter le nouvel parti politique : ", couleurs.cyan));
         if (nouveauParti.trim() === "") {
         nouveauParti = "Independant";
-    }
+        }
+        else if(!isNaN(nouveauParti))
+        {
+        console.log();
+        console.log(colorer("Erreur : le parti politique ne peut pas être un nombre.", couleurs.rouge));
+        console.log();
+        return;
+        }
         candidat.partiPolitique = nouveauParti;
 
         console.log();
@@ -463,19 +541,25 @@ function supprimerUnCandidat() {
     console.log();
     const candidatCin = prompt(colorer("Entrer la Cin du candidat : ", couleurs.cyan));
 
-    const candidat = linearSearchCin(candidatCin);
+    if (candidatCin.trim() === "") {
+        console.log();
+        console.log(colorer("Erreur : la Cin est obligatoire.", couleurs.rouge));
+        console.log();
+        return false;
+    }
 
+    const candidat = linearSearchIndex(candidatCin);
+   
     if (candidat === -1) {
         console.log();
         console.log(colorer("Erreur: candidat n'existe pas.", couleurs.rouge));
         console.log();
         return;
     }
-    else {
-        console.log();
-        console.log(colorer("Fais attention cette procédure supprimera le candidat de la base de données !", couleurs.jaune));
-        console.log();
-        const safecheck = prompt(colorer("Es-tu sûr? (Non / Oui) : ", couleurs.cyan));
+    console.log();
+    console.log(colorer("Fais attention cette procédure supprimera le candidat de la base de données !", couleurs.jaune));
+    console.log();
+    const safecheck = prompt(colorer("Es-tu sûr? (Non / Oui) : ", couleurs.cyan));
 
         if (safecheck === "Non") {
             console.log();
@@ -494,12 +578,19 @@ function supprimerUnCandidat() {
         console.log();
         console.log(colorer("Votre réponse est incorrecte. La suppression a été annulée.", couleurs.rouge));
         console.log();
-    }
+    
 }
 
 // Rechercher des candidats par nom
 function rechercherDesCandidats() {
     const nom = prompt(colorer("Entrer le nom de candidat : ", couleurs.cyan));
+
+    if (nom.trim() === "") {
+        console.log();
+        console.log(colorer("Erreur : le Nom est obligatoire.", couleurs.rouge));
+        console.log();
+        return false;
+        }
 
     const rechercheNom = linearSearchParNom(nom);
 
