@@ -1,5 +1,4 @@
-
-
+// Gestion des Élections et Listes Électorales au Maroc
 const prompt = require("prompt-sync")({ sigint: true });
 // Coulour 
 const couleurs = {
@@ -141,7 +140,7 @@ function menuPrincipale() {
 // Afficher candidat(s) menu
 function AfficherCandidatsMenu() {
     console.log(colorer(`=================================
-AFFICHER LES CANDIDATS
+     AFFICHER LES CANDIDATS
 ================================= `, couleurs.jaune));
     console.log(`
 1. Afficher la list des candidats
@@ -157,7 +156,7 @@ AFFICHER LES CANDIDATS
 // Modification les candidat menu
 function AffichermodificationCandidatsMenu() {
     console.log(colorer(`=================================
-MODIFIER LES INFORMATION DU CANDIDAT
+     MODIFIER LES INFORMATION DU CANDIDAT
 ================================= `, couleurs.jaune));
     console.log(`
 1. Modifier l'âge d'un candidat
@@ -220,10 +219,10 @@ function ajouterCandidat() {
 
     const nom = prompt(colorer("Entrer le nom : ", couleurs.cyan));
     const prenom = prompt(colorer("Entrer le prénom : ", couleurs.cyan));
-    let partipolitique = prompt(colorer("Entrer le parti politique (ou Indépendant): ", couleurs.cyan));
+    let partiPolitique = prompt(colorer("Entrer le parti politique (ou Indépendant): ", couleurs.cyan));
 
-    if (partipolitique === "" || partipolitique === " ") {
-        partipolitique = "Independant";
+    if (partiPolitique.trim() === "") {
+        partiPolitique = "Independant";
     }
     const age = Number(prompt(colorer("Entrer L'âge' : ", couleurs.cyan)));
 
@@ -239,7 +238,7 @@ function ajouterCandidat() {
         cin: cin,
         nom: nom,
         prenom: prenom,
-        partiPolitique: partipolitique,
+        partiPolitique: partiPolitique,
         age: age,
         electeurs: [],
     }
@@ -335,7 +334,7 @@ function afficherCandidatsParPartiPolitique() {
     }
 
     let parti = prompt(colorer(`Entrer le parti politique (ou "Independant" ): `, couleurs.cyan));
-    if (parti == null || parti.trim() === "") {
+    if (parti.trim() === "") {
         parti = "Independant";
     }
 
@@ -350,7 +349,7 @@ function afficherCandidatsParPartiPolitique() {
             const candidat = candidates[i];
 
 
-            console.log(`${i + 1}. ${candidat.prenom} ${candidat.nom} - CIN : ${candidat.cin} - parti politique : ${candidat.partiPolitique} - Âge :  ${candidat.age} - Votes : ${candidat.electeurs.length}.`);
+            console.log(`${i + 1}. ${candidat.nom} ${candidat.prenom} - CIN : ${candidat.cin} - parti politique : ${candidat.partiPolitique} - Âge :  ${candidat.age} - Votes : ${candidat.electeurs.length}.`);
 
             found = 1;
         }
@@ -418,7 +417,7 @@ function modifierAgeDeCandidat() {
     else {
 
         const nouveauAge = Number(prompt(colorer("Enter le nouvel age : ", couleurs.cyan)));
-        if (nouveauAge < 18) {
+        if (nouveauAge < 18 && nouveauAge > 65) {
             console.log();
             console.log(colorer("Erreur: Age invalide .", couleurs.rouge));
             console.log();
@@ -447,8 +446,10 @@ function modifierpartiPolitiqueDeCandidat() {
     }
     else {
 
-        const nouveauParti = Number(prompt(colorer("Enter le nouvel parti politique : ", couleurs.cyan)));
-
+        let nouveauParti = prompt(colorer("Enter le nouvel parti politique : ", couleurs.cyan));
+        if (nouveauParti.trim() === "") {
+        nouveauParti = "Independant";
+    }
         candidat.partiPolitique = nouveauParti;
 
         console.log();
@@ -479,6 +480,7 @@ function supprimerUnCandidat() {
         if (safecheck === "Non") {
             console.log();
             console.log(colorer("La suppression a été annulée.", couleurs.gras));
+            console.log();
             return;
         }
         else if (safecheck === "Oui") {
@@ -490,7 +492,8 @@ function supprimerUnCandidat() {
             return;
         }
         console.log();
-        console.log(colorer("Votre réponse est incorrecte. La suppression a été annulée.", couleurs.gras));
+        console.log(colorer("Votre réponse est incorrecte. La suppression a été annulée.", couleurs.rouge));
+        console.log();
     }
 }
 
@@ -514,7 +517,7 @@ function rechercherDesCandidats() {
         for (let i = 0; i < rechercheNom.length; i++) {
             const candidat = rechercheNom[i];
 
-            console.log(`${i + 1}. ${candidat.prenom} ${candidat.nom} - CIN : ${candidat.cin} - parti politique : ${candidat.partiPolitique} - Âge :  ${candidat.age} - Votes : ${candidat.electeurs.length}.`);
+            console.log(`${i + 1}. ${candidat.nom} ${candidat.prenom} - CIN : ${candidat.cin} - parti politique : ${candidat.partiPolitique} - Âge :  ${candidat.age} - Votes : ${candidat.electeurs.length}.`);
         }
     }
 }
@@ -529,7 +532,7 @@ function Statistiques() {
     }
     // Nombre totale des candidats
     console.log();
-    console.log(colorer(`- Voici le nombre totale des candidtas : ${candidates.length} .`, couleurs.bleu));
+    console.log(colorer(`- Voici le nombre totale des candidtas : ${candidates.length} .`, couleurs.vert));
     console.log();
 
     //nombre totale de votes
@@ -538,7 +541,7 @@ function Statistiques() {
         resultat += candidates[i].electeurs.length;
     }
     console.log();
-    console.log(colorer(`- Voici le nombre totale de votes exprimés dans toute l'élection : ${resultat}.`, couleurs.bleu));
+    console.log(colorer(`- Voici le nombre totale de votes exprimés dans toute l'élection : ${resultat}.`, couleurs.vert));
     console.log();
 
     // Top 3 candidats / votes
@@ -556,7 +559,7 @@ function Statistiques() {
         fin = sortedCandidates.length;
     }
     console.log();
-    console.log(colorer("- Voici le Top 3 candidats. ", couleurs.bleu));
+    console.log(colorer("- Voici le Top 3 candidats. ", couleurs.vert));
     console.log();
     for (let i = 0; i < fin; i++) {
         const candidat = sortedCandidates[i];
@@ -571,9 +574,9 @@ function Statistiques() {
     for (let i = 0; i < candidates.length; i++) {
 
         const parti = candidates[i].partiPolitique;
-        if (partisPolitique[parti] === NaN) {
+        /*if (partisPolitique[parti] === NaN) {
             continue;
-        }
+        }*/
 
         if (partisPolitique[parti] === undefined) {
             partisPolitique[parti] = 1;
@@ -583,7 +586,7 @@ function Statistiques() {
     }
 
     console.log();
-    console.log(colorer("- Voici le nombre de candidtas par parti politique.", couleurs.bleu));
+    console.log(colorer("- Voici le nombre de candidtas par parti politique.", couleurs.vert));
     console.log();
 
     for (let parti in partisPolitique) {
