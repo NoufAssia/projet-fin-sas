@@ -1,6 +1,6 @@
-const { colors } = require("prompt");
 
-const prompt = require("prompt-sync")();
+
+const prompt = require("prompt-sync")({ sigint: true });
 // Coulour 
 const couleurs = {
     reset: "\x1b[0m",     // Arrête la couleur, retour à la normale
@@ -222,7 +222,7 @@ function ajouterCandidat() {
     const prenom = prompt(colorer("Entrer le prénom : ", couleurs.cyan));
     let partipolitique = prompt(colorer("Entrer le parti politique (ou Indépendant): ", couleurs.cyan));
 
-    if (partipolitique === "" || partipolitique === null) {
+    if (partipolitique === "" || partipolitique === " ") {
         partipolitique = "Independant";
     }
     const age = Number(prompt(colorer("Entrer L'âge' : ", couleurs.cyan)));
@@ -270,10 +270,11 @@ function ajouterPlusieursCandidats() {
         console.log(colorer(`--- Candidat numéro: ${i + 1} ---`, couleurs.magenta));
         console.log();
 
-        check = ajouterCandidat();
-        if (check === true) {
-            i++;
+        const check = ajouterCandidat();
+        if (check === false) {
+            return;
         }
+        i++;
     }
 }
 
