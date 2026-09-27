@@ -574,9 +574,6 @@ function Statistiques() {
     for (let i = 0; i < candidates.length; i++) {
 
         const parti = candidates[i].partiPolitique;
-        /*if (partisPolitique[parti] === NaN) {
-            continue;
-        }*/
 
         if (partisPolitique[parti] === undefined) {
             partisPolitique[parti] = 1;
